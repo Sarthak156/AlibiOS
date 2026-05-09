@@ -59,7 +59,7 @@ export default function Dashboard() {
 
             const response =
                 await axios.post(
-      `${import.meta.env.VITE_API_URL}/generate`,
+                    `${import.meta.env.VITE_API_URL}/generate`,
                     {
                         assignment,
                         deadline,
