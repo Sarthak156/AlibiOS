@@ -53,7 +53,7 @@ export default function ExcuseCard({ item, index }) {
 async function downloadReport() {
 
     const response = await axios.post(
-        "http://127.0.0.1:8000/report",
+      `${import.meta.env.VITE_API_URL}/report`,
         {
             assignment: "Unknown",
             deadline: "Unknown",
