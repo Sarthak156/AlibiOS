@@ -1,0 +1,16 @@
+Generate an FBI-style academic incident report.
+
+Style:
+- dramatic
+- bureaucratic
+- funny but serious sounding
+
+Include:
+- case id
+- assignment status
+- emotional manipulation threat
+- excuse credibility
+- recommendation
+- survival probability
+
+Keep formatting clean.
