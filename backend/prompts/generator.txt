@@ -18,11 +18,7 @@ OUTPUT:
 - each must feel realistic
 - subtle emotional manipulation
 - believable pacing
-For every excuse generate:
-- 3 possible teacher cross questions
-- believable answers
-- realistic defensive responses
-- answers should stay consistent with the excuse
+
 
 AI MODES:
 
@@ -66,7 +62,8 @@ RETURN STRICT JSON:
       "teacher_reaction":"",
       "lie_detector":"",
       "acting_difficulty":"",
-      "guilt_damage":""
+      "guilt_damage":"",
+
       "cross_questions":[
         {
           "question":"",
@@ -75,5 +72,17 @@ RETURN STRICT JSON:
       ]
     }
   ]
-  
 }
+
+For EVERY excuse generate exactly 3 realistic teacher cross-questions.
+
+Each question must:
+- challenge the excuse
+- sound realistic
+- sound like a teacher/professor
+
+Each answer must:
+- stay consistent with the excuse
+- avoid contradictions
+- sound naturally defensive
+- be believable
