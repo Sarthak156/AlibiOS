@@ -1,10 +1,13 @@
 export default function SystemStats() {
 
     const stats = [
-        "Teacher Empathy: 72%",
-        "Suspicion Level: LOW",
+
+        "Teacher Empathy: 82%",
+        "Suspicion Index: LOW",
         "Narrative Stability: HIGH",
-        "Emotional Payload: CRITICAL"
+        "Parent Call Risk: MEDIUM",
+        "Psychological Damage: CRITICAL"
+
     ];
 
     return (

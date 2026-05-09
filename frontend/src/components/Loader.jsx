@@ -6,6 +6,7 @@ export default function Loader() {
         <div className="flex justify-center py-6">
 
             <ClipLoader color="#00ff99" />
+            new Audio("/boot.mp3").play()
 
         </div>
     );

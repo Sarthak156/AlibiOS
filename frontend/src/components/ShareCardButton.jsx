@@ -1,34 +1,33 @@
 import html2canvas from "html2canvas";
 
-export default function ShareCardButton() {
+export default function ShareCardButton(){
 
-    async function capture() {
+  async function exportCard(){
 
-        const card =
-            document.body;
+    const canvas =
+      await html2canvas(document.body);
 
-        const canvas =
-            await html2canvas(card);
+    const image =
+      canvas.toDataURL("image/png");
 
-        const image =
-            canvas.toDataURL("image/png");
+    const link =
+      document.createElement("a");
 
-        const link =
-            document.createElement("a");
+    link.download =
+      "alibi-report.png";
 
-        link.download = "alibi-card.png";
+    link.href = image;
 
-        link.href = image;
+    link.click();
+  }
 
-        link.click();
-    }
+  return(
 
-    return (
-        <button
-            onClick={capture}
-            className="bg-blue-500 px-4 py-2 rounded-lg mt-4"
-        >
-            📸 Export Share Card
-        </button>
-    );
+    <button
+      onClick={exportCard}
+      className="bg-blue-500 px-4 py-2 rounded-lg"
+    >
+      📸 Export Share Card
+    </button>
+  )
 }

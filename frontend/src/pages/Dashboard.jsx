@@ -185,6 +185,9 @@ export default function Dashboard() {
                                 key={index}
                                 item={item}
                                 index={index}
+                                assignment={assignment}
+                                deadline={deadline}
+                                situation={situation}
                             />
                         ))
                     }

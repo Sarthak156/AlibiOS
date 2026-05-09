@@ -1,16 +1,25 @@
 import { motion } from "framer-motion";
+import { TypeAnimation } from "react-type-animation";
 import axios from "axios";
 
-export default function ExcuseCard({ item, index }) {
+export default function ExcuseCard({
+    item,
+    index,
+    assignment,
+    deadline,
+    situation
+}) {
 
-    const downloadReport = async () => {
+    async function downloadReport() {
+
         try {
+
             const response = await axios.post(
-              `${import.meta.env.VITE_API_URL}/report`,
+                `${import.meta.env.VITE_API_URL}/report`,
                 {
-                    assignment: "Unknown",
-                    deadline: "Unknown",
-                    situation: item.text
+                    assignment,
+                    deadline,
+                    situation
                 },
                 {
                     responseType: "blob"
@@ -29,65 +38,205 @@ export default function ExcuseCard({ item, index }) {
 
             link.setAttribute(
                 "download",
-                `report_excuse_${index + 1}.pdf`
+                "alibi-report.pdf"
             );
 
             document.body.appendChild(link);
 
             link.click();
-            
-            document.body.removeChild(link);
+
         } catch (error) {
-            alert("Failed to download report: " + error.message);
+
+            console.log(error);
+
+            alert("Failed to generate report.");
         }
-    };
+    }
 
     return (
+
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gray-900 border border-green-500 p-5 rounded-2xl"
+            className="
+                bg-gray-900
+                border
+                border-green-500
+                p-6
+                rounded-2xl
+                glow
+            "
         >
 
-            <h2 className="text-2xl mb-3 text-green-400">
+            {/* Title */}
+            <h2 className="
+                text-3xl
+                mb-5
+                text-green-400
+                font-bold
+            ">
                 Excuse #{index + 1}
             </h2>
 
-            <p className="mb-5 leading-7">
-                {item.text}
-            </p>
+            {/* Excuse Text */}
+            <div className="
+                bg-black
+                p-4
+                rounded-xl
+                mb-6
+                leading-8
+                text-green-200
+            ">
 
-            <div className="space-y-2 text-sm">
-
-                <p>
-                    🎯 Success Probability:
-                    {" "}
-                    {item.success_probability}
-                </p>
-
-                <p>
-                    🧠 Emotional Manipulation:
-                    {" "}
-                    {item.emotional_manipulation}
-                </p>
-
-                <p>
-                    ☠️ Risk:
-                    {" "}
-                    {item.risk}
-                </p>
-
-                <p>
-                    🕵️ Lie Detector:
-                    {" "}
-                    {item.lie_detector}
-                </p>
+                <TypeAnimation
+                    sequence={[
+                        item.text,
+                        1000
+                    ]}
+                    wrapper="p"
+                    speed={70}
+                    repeat={0}
+                />
 
             </div>
 
+            {/* Metrics */}
+            <div className="
+                grid
+                md:grid-cols-2
+                gap-4
+                text-sm
+            ">
+
+                <div className="
+                    bg-black
+                    p-3
+                    rounded-lg
+                ">
+                    🎯 Success Probability:
+                    {" "}
+                    {item.success_probability}
+                </div>
+
+                <div className="
+                    bg-black
+                    p-3
+                    rounded-lg
+                ">
+                    🧠 Emotional Manipulation:
+                    {" "}
+                    {item.emotional_manipulation}
+                </div>
+
+                <div className="
+                    bg-black
+                    p-3
+                    rounded-lg
+                ">
+                    ☠️ Risk:
+                    {" "}
+                    {item.risk}
+                </div>
+
+                <div className="
+                    bg-black
+                    p-3
+                    rounded-lg
+                ">
+                    🕵️ Lie Detector:
+                    {" "}
+                    {item.lie_detector}
+                </div>
+
+                <div className="
+                    bg-black
+                    p-3
+                    rounded-lg
+                ">
+                    🎭 Acting Difficulty:
+                    {" "}
+                    {item.acting_difficulty || "MEDIUM"}
+                </div>
+
+                <div className="
+                    bg-black
+                    p-3
+                    rounded-lg
+                ">
+                    💥 Guilt Damage:
+                    {" "}
+                    {item.guilt_damage || "HIGH"}
+                </div>
+
+            </div>
+
+            {/* Cross Questions */}
+            <div className="mt-8">
+
+                <h3 className="
+                    text-2xl
+                    text-green-400
+                    mb-4
+                    font-bold
+                ">
+                    Teacher Cross-Questions
+                </h3>
+
+                {
+                    item.cross_questions?.map(
+                        (q, index) => (
+
+                            <div
+                                key={index}
+                                className="
+                                    mb-4
+                                    bg-black
+                                    p-4
+                                    rounded-xl
+                                    border
+                                    border-gray-700
+                                "
+                            >
+
+                                <p className="
+                                    text-red-400
+                                    mb-3
+                                    font-semibold
+                                ">
+                                    ❓ Q:
+                                    {" "}
+                                    {q.question}
+                                </p>
+
+                                <p className="
+                                    text-green-300
+                                    leading-7
+                                ">
+                                    ✅ A:
+                                    {" "}
+                                    {q.answer}
+                                </p>
+
+                            </div>
+                        )
+                    )
+                }
+
+            </div>
+
+            {/* Download Button */}
             <button
                 onClick={downloadReport}
-                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg mt-4 text-white font-bold"
+                className="
+                    mt-6
+                    bg-red-500
+                    hover:bg-red-600
+                    transition-all
+                    px-6
+                    py-3
+                    rounded-xl
+                    font-bold
+                "
             >
                 📄 Download FBI Report
             </button>

@@ -1,26 +1,31 @@
 import random
 
+def calculate_scores(text):
 
-def calculate_scores(excuse_text):
+    text = text.lower()
 
-    success = random.randint(60, 95)
+    success = 65
+    emotional = 40
+    suspicion = 20
 
-    emotional = random.randint(40, 98)
+    if "family" in text:
+        emotional += 20
+        success += 10
 
-    risk = random.choice([
-        "LOW",
-        "MEDIUM",
-        "HIGH",
-        "CRITICAL"
-    ])
+    if "hospital" in text:
+        emotional += 35
+        suspicion += 20
 
-    suspicion = random.randint(10, 90)
+    if "internet" in text:
+        success += 8
 
-    if "hospital" in excuse_text.lower():
-        suspicion += 10
+    if "laptop" in text:
+        success += 10
 
-    if "internet" in excuse_text.lower():
-        suspicion -= 5
+    if "forgot" in text:
+        success -= 25
+
+    success = min(success,95)
 
     if suspicion < 30:
         lie = "LOW SUSPICION"
@@ -28,15 +33,17 @@ def calculate_scores(excuse_text):
     elif suspicion < 60:
         lie = "MODERATE RISK"
 
-    elif suspicion < 80:
-        lie = "HIGHLY SUSPICIOUS"
-
     else:
         lie = "FEDERAL INVESTIGATION"
 
     return {
-        "success_probability": f"{success}%",
-        "emotional_manipulation": f"{emotional}%",
-        "risk": risk,
-        "lie_detector": lie
+        "success_probability":f"{success}%",
+        "emotional_manipulation":f"{emotional}%",
+        "risk":random.choice([
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+        ]),
+        "lie_detector":lie
     }
