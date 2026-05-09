@@ -70,13 +70,25 @@ export default function Dashboard() {
                     }
                 );
 
-            setResults(
-                response.data.result.excuses
-            );
+            console.log(response.data);
+
+            if (response.data?.result?.error) {
+                alert(response.data.result.error);
+                setResults([]);
+            } else {
+                setResults(
+                    response.data?.result?.excuses || []
+                );
+            }
 
         } catch (error) {
 
-            console.log(error);
+            console.log("FULL ERROR:", error);
+
+            alert(
+                error?.response?.data?.detail ||
+                error.message
+            );
 
         }
 

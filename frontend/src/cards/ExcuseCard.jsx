@@ -3,6 +3,45 @@ import axios from "axios";
 
 export default function ExcuseCard({ item, index }) {
 
+    const downloadReport = async () => {
+        try {
+            const response = await axios.post(
+              `${import.meta.env.VITE_API_URL}/report`,
+                {
+                    assignment: "Unknown",
+                    deadline: "Unknown",
+                    situation: item.text
+                },
+                {
+                    responseType: "blob"
+                }
+            );
+
+            const url =
+                window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
+
+            const link =
+                document.createElement("a");
+
+            link.href = url;
+
+            link.setAttribute(
+                "download",
+                `report_excuse_${index + 1}.pdf`
+            );
+
+            document.body.appendChild(link);
+
+            link.click();
+            
+            document.body.removeChild(link);
+        } catch (error) {
+            alert("Failed to download report: " + error.message);
+        }
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -46,47 +85,13 @@ export default function ExcuseCard({ item, index }) {
 
             </div>
 
+            <button
+                onClick={downloadReport}
+                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg mt-4 text-white font-bold"
+            >
+                📄 Download FBI Report
+            </button>
+
         </motion.div>
     );
 }
-
-async function downloadReport() {
-
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/report`,
-        {
-            assignment: "Unknown",
-            deadline: "Unknown",
-            situation: item.text
-        },
-        {
-            responseType: "blob"
-        }
-    );
-
-    const url =
-        window.URL.createObjectURL(
-            new Blob([response.data])
-        );
-
-    const link =
-        document.createElement("a");
-
-    link.href = url;
-
-    link.setAttribute(
-        "download",
-        "report.pdf"
-    );
-
-    document.body.appendChild(link);
-
-    link.click();
-}
-
-<button
-    onClick={downloadReport}
-    className="bg-red-500 px-4 py-2 rounded-lg mt-4"
->
-    📄 Download FBI Report
-</button>
